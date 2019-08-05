@@ -8,14 +8,18 @@ import java.util.*;
 
 public class ToDosRepository {
 
-    private static Map<String, List<ToDoModel>> toDoList = loadMockToDos();
+    private static Map<String, List<ToDoModel>> toDoMap = loadMockToDos();
 
     public List<ToDoModel> getTodoList(String login) {
-        return toDoList.get(login);
+        return toDoMap.get(login);
     }
 
     public void addTodoToList(String login, ToDoModel toDoModel) {
-        toDoList.get(login).add(toDoModel);
+        if (toDoMap.get(login) != null){
+            toDoMap.get(login).add(toDoModel);
+        }else{
+            toDoMap.put(login, new ArrayList<>(Arrays.asList(toDoModel)));
+        }
     }
 
     private static Map<String, List<ToDoModel>> loadMockToDos() {
@@ -33,7 +37,7 @@ public class ToDosRepository {
     }
 
     public void remove(String login, Long id) {
-        List<ToDoModel> toDoModels = toDoList.get(login);
+        List<ToDoModel> toDoModels = toDoMap.get(login);
         ToDoModel toDoModel = toDoModels.stream()
                 .filter(t -> t.getId().equals(id))
                 .findFirst()
@@ -42,7 +46,7 @@ public class ToDosRepository {
     }
 
     public void markAsDone(String login, Long id) {
-        List<ToDoModel> toDoModels = toDoList.get(login);
+        List<ToDoModel> toDoModels = toDoMap.get(login);
         Optional<ToDoModel> first = toDoModels.stream()
                 .filter(t -> t.getId().equals(id))
                 .findFirst();
@@ -53,7 +57,7 @@ public class ToDosRepository {
     }
 
     public void edit(String login, ToDoModel toDoModel) {
-        List<ToDoModel> toDoModels = toDoList.get(login);
+        List<ToDoModel> toDoModels = toDoMap.get(login);
         Optional<ToDoModel> first = toDoModels.stream()
                 .filter(t -> t.getId().equals(toDoModel.getId()))
                 .findFirst();
@@ -68,7 +72,7 @@ public class ToDosRepository {
     }
 
     public ToDoModel getToDo(String login, Long id) {
-        return toDoList.get(login).stream()
+        return toDoMap.get(login).stream()
                 .filter(t -> t.getId().equals(id))
                 .findFirst().orElse(null);
     }

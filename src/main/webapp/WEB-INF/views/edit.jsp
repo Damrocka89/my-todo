@@ -19,30 +19,21 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">List of Todos</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        </ul>
-    </div>
-</nav>
+<%@ include file="components/navbar.jsp" %>
 
 
-
-<form action="/edit" method="post">
+<form action="/to-do/edit" method="post">
     <div class="form-row">
         <div class="form-group col-md-6">
             <input type="text" class="form-control" id="title" name="title" value="${todo.title}">
         </div>
         <div class="form-group col-md-6">
             <select class="form-control" id="category" name="category">
-                <option selected>"${todo.category}"</option selected>
+                <option selected>${todo.category}</option selected>
                 <c:forEach items="${categories}" var="category">
-                    <option>${category}</option>
+                    <c:if test="${category != todo.category}">
+                        <option>${category}</option>
+                    </c:if>
                 </c:forEach>
             </select>
         </div>
@@ -57,7 +48,7 @@
     </div>
     <div class="form-row">
         <input type=hidden name="id" value="${todo.id}">
-        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        <button type="submit" class="btn btn-primary btn-block">Update</button>
     </div>
 </form>
 

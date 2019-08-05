@@ -13,13 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 
-@WebServlet("/save")
+@WebServlet("/to-do/save")
 public class SaveToDoController extends HttpServlet {
 
     private final ToDoService toDoService = new ToDoService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String title = req.getParameter("title");
         String category = req.getParameter("category");
         String dueDate = req.getParameter("dueDate");
@@ -28,7 +29,7 @@ public class SaveToDoController extends HttpServlet {
                 LocalDate.now(), LocalDate.parse(dueDate), description);
         String login = (String) req.getSession().getAttribute("login");
         toDoService.addTodo(login, toDoModel);
-        resp.sendRedirect("/list");
+        resp.sendRedirect("/to-do/list");
     }
 
 }

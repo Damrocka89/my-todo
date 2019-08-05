@@ -18,17 +18,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">List of Todos</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        </ul>
-    </div>
-</nav>
+<%@ include file="components/navbar.jsp" %>
 
 <div class="table-responsive">
     <table class="table">
@@ -50,7 +40,7 @@
             <td><h6>${todo.dueDate}</h6></td>
             <td><h6>${todo.description}</h6></td>
             <td>
-                <form action="/markAsDone" method="get">
+                <form action="/to-do/markAsDone" method="get">
                     <input type=hidden name="id" value="${todo.id}">
                     <c:if test="${todo.done == false}">
                         <input type="submit" value="Done" class="btn btn-success outline"/>
@@ -58,13 +48,13 @@
                 </form>
             </td>
             <td>
-                <form action="/edit" method="get">
+                <form action="/to-do/edit" method="get">
                     <input type=hidden name="id" value="${todo.id}">
                     <input type="submit" value="Edit" class="btn btn-primary outline"/>
                 </form>
             </td>
             <td>
-                <form action="<c:url value="/delete"/>" method="get">
+                <form action="<c:url value="/to-do/delete"/>" method="get">
                     <input type=hidden name="id" value="${todo.id}">
                     <input type="submit" value="Delete" class="btn btn-danger outline"/>
                 </form>
@@ -76,7 +66,7 @@
 </div>
 
 
-<form action="/save" method="get">
+<form action="/to-do/save" method="get">
     <div class="form-row">
         <div class="form-group col-md-6">
             <input type="text" class="form-control" id="title" name="title" placeholder="Title">
@@ -98,7 +88,7 @@
         </div>
     </div>
     <div class="form-row">
-            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            <button type="submit" class="btn btn-primary btn-block">Save</button>
     </div>
 </form>
 
